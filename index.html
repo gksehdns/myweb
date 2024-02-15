@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이머</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #timer {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">
+        <input type="number" id="timeInput" placeholder="분을 입력하세요" min="1" required>
+        <br>
+        <button onclick="startTimer()">시작</button>
+        <br>
+        <div id="timerDisplay"></div>
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft;
+
+        function startTimer() {
+            const timeInput = document.getElementById('timeInput');
+            const timerDisplay = document.getElementById('timerDisplay');
+
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            timeLeft = parseInt(timeInput.value) * 60;
+
+            if (isNaN(timeLeft) || timeLeft <= 0) {
+                alert('올바른 시간을 입력하세요.');
+                return;
+            }
+
+            timer = setInterval(function () {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                timerDisplay.innerHTML = `${minutes}분 ${seconds}초 남았습니다.`;
+
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    timerDisplay.innerHTML = '타이머 종료!';
+                }
+
+                timeLeft--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
